@@ -1,17 +1,16 @@
-
 import math
 from programobgect import *
 from math import sin, cos, atan
 from figure import *
 from otherfunc import *
 class Head(PObj):
-    def __init__(self, fon, x, y, r):
-        super().__init__(fon, x + 0.5 * r, y + r * 0.005, r, )
-        self.truba = Truba(fon, self._x, self._y, self._r, self._x + 0.75 * self._r, self._y, 0, self._r * 0.025, 0,
-                           -1 * self._r * 0.025)
-        self.h = 0.0
-        # self.hole = self._fon.create_oval(self._x+0.7*self._r, self._y+self._r*0.025, self._x+0.8*self._r, self._y-self._r*0.025, fill="black", tag="stvol")
+    def __init__(self, fon, x, y, r, h):
+        super().__init__(fon, x+0.5*r, y+r*0.005, r)
+        self.truba = Truba(fon, self._x, self._y, self._r, self._x+0.75*self._r, self._y, 0, self._r*0.025, 0, -1*self._r*0.025)
+        self.h=h
+        #self.hole = self._fon.create_oval(self._x+0.7*self._r, self._y+self._r*0.025, self._x+0.8*self._r, self._y-self._r*0.025, fill="black", tag="stvol")
     def muve(self, ar):
+
         if ar+self.h>=0.0 and ar+self.h<=1.5:
             co = cos(ar)
             si = sin(ar)
@@ -22,12 +21,13 @@ class Head(PObj):
             self._fon.delete(self.truba._obj)
             self.truba.__init__(self.truba._fon, self.truba._x, self.truba._y, self.truba._r, nlx, nly, uvx, uvy, dvx, dvy)
             self.h+=ar
+            self.h=h
 
 
 class Turel(PObj):
-    def __init__(self, fon, x, y, r):
+    def __init__(self, fon, x, y, r, h):
         super().__init__(fon, x, y, r)
-        self._stvol=Head(fon, x, y, r)
+        self._stvol=Head(fon, x, y, r, h)
         self._ground=self._fon.create_arc(self._x, self._y, self._x + self._r, self._y + self._r, start=0, extent=180, fill="gray")
     def piw_paw(self):
         pass
