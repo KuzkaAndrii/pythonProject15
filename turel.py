@@ -1,15 +1,27 @@
-from programobgect import *
-from math import sin, cos
 
+import math
+from programobgect import *
+from math import sin, cos, atan
+from figure import *
+from otherfunc import *
 class Head(PObj):
     def __init__(self, fon, x, y, r):
-        super().__init__(fon, x+0.5*r, y+r*0.005, r)
-        self.truba=self._fon.create_polygon(self._x+0.75*self._r, self._y+self._r*0.025, self._x, self._y+self._r*0.03, self._x, self._y-self._r*0.025, self._x+0.75*self._r, self._y-self._r*0.025, fill="grey", tag="stvol")
-        self.hole = self._fon.create_oval(self._x+0.7*self._r, self._y+self._r*0.025, self._x+0.8*self._r, self._y-self._r*0.025, fill="black", tag="stvol")
+        super().__init__(fon, x + 0.5 * r, y + r * 0.005, r, )
+        self.truba = Truba(fon, self._x, self._y, self._r, self._x + 0.75 * self._r, self._y, 0, self._r * 0.025, 0,
+                           -1 * self._r * 0.025)
+        self.h = 0.0
+        # self.hole = self._fon.create_oval(self._x+0.7*self._r, self._y+self._r*0.025, self._x+0.8*self._r, self._y-self._r*0.025, fill="black", tag="stvol")
     def muve(self, ar):
-        co=cos(-1*ar)
-        si=sin(-1*ar)
-
+        if ar+self.h>=0.0 and ar+self.h<=1.5:
+            co = cos(ar)
+            si = sin(ar)
+            nlx, nly = change(self.truba._lx - self.truba._x, self.truba._ly - self.truba._y, co, si)
+            nlx, nly = nlx + self.truba._x, nly + self.truba._y
+            uvx, uvy = change(self.truba._uvx, self.truba._uvy, co, si)
+            dvx, dvy = change(self.truba._dvx, self.truba._dvy, co, si)
+            self._fon.delete(self.truba._obj)
+            self.truba.__init__(self.truba._fon, self.truba._x, self.truba._y, self.truba._r, nlx, nly, uvx, uvy, dvx, dvy)
+            self.h+=ar
 
 
 class Turel(PObj):
@@ -19,8 +31,7 @@ class Turel(PObj):
         self._ground=self._fon.create_arc(self._x, self._y, self._x + self._r, self._y + self._r, start=0, extent=180, fill="gray")
     def piw_paw(self):
         pass
-    def muve(self):
-        ar=1
+    def muve(self, ar):
         self._stvol.muve(ar)
 if __name__=="__main__":
     print("turel")
