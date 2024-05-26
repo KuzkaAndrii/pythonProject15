@@ -1,5 +1,3 @@
-import math
-from programobgect import *
 from math import sin, cos, atan
 from figure import *
 from otherfunc import *
@@ -22,8 +20,10 @@ class Head(PObj):
             self._fon.delete(self.truba._obj)
             self.truba.__init__(self.truba._fon, self.truba._x, self.truba._y, self.truba._r, nlx, nly, uvx, uvy, dvx, dvy)
             self.h=h
+
+
 class Turel(PObj):
-    def __init__(self, fon, x, y, r, h):
+    def __init__(self, fon, x, y, r, h, pl):
         super().__init__(fon, x, y, r)
         self._stvol=Head(fon, x, y, r, h)
         self._ground=self._fon.create_arc(self._x, self._y, self._x + self._r, self._y + self._r, start=0, extent=180, fill="gray")
@@ -31,9 +31,8 @@ class Turel(PObj):
         ba=Ball(self._fon, self._stvol.truba._lx, self._stvol.truba._ly, self._r)
         at = atan((self._stvol.truba._ly - self._stvol.truba._y) / (self._stvol.truba._lx - self._stvol.truba._x))
         #n=3
-        while ba._x<=2*self._r and ba._y>=0.0:
-            ba.move(at)
-            #n-=1
+        ba.move(at)
+        #n-=1
     def muve(self, ar):
         self._stvol.muve(ar)
 if __name__=="__main__":
