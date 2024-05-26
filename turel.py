@@ -27,9 +27,9 @@ class Turel(PObj):
         self._ground=self._fon.create_arc(self._x, self._y, self._x + self._r, self._y + self._r, start=0, extent=180, fill="gray")
         self._aim=pl
     def piw_paw(self):
-        ba=Ball(self._fon, self._stvol.truba._lx, self._stvol.truba._ly, self._r, self._aim)
         at = atan((self._stvol.truba._ly - self._stvol.truba._y) / (self._stvol.truba._lx - self._stvol.truba._x))
-        ba.move(at)
+        ba=Ball(self._fon, self._stvol.truba._lx, self._stvol.truba._ly, self._r, self._aim, at)
+        return ba.move()
     def muve(self, ar):
         self._stvol.muve(ar)
 if __name__=="__main__":
