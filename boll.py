@@ -11,5 +11,6 @@ class Ball(PObj):
         self._y = self._y + s
     def Move(self, a, b, c):
         self._fon.move(a, b, c)
+        self._fon.after(30, self.Move, a, b, c)
 if __name__=="__main__":
     print("boll")
