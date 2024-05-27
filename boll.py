@@ -10,10 +10,11 @@ def event_crash(b, p):
         else:
             return True
 class Ball(PObj):
-    def __init__(self, fon, x, y, r, aim, fi):
+    def __init__(self, fon, x, y, r, aim, fi, sp):
         super().__init__(fon, x, y, r)
-        self._c, self._s=10*cos(fi), 10*sin(fi)
         self._aim=aim
+        self._sp=sp
+        self._c, self._s = self._sp * cos(fi), self._sp * sin(fi)
         self._obj=self._fon.create_oval(self._x-0.025*r, self._y+0.025*r, self._x+0.025*r, self._y-0.025*r, fill="red")
     def move(self):
         self._fon.move(self._obj, self._c, self._s)
@@ -25,7 +26,7 @@ class Ball(PObj):
             return
         elif event_crash(self, self._aim):
             self._aim._dam = True
-            self._aim.repid(self._aim)
+            self._aim.repid()
             self._fon.delete(self._obj)
             del self
             return

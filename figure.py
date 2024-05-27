@@ -1,7 +1,4 @@
 from programobgect import *
-class Hole(PObj):
-    def __init__(self, fon, x, y, r):
-        super().__init__(fon, x, y, r)
 class Truba(PObj):
     def __init__(self, fon, x, y, r, lx, ly, uvx, uvy, dvx, dvy):
         super().__init__(fon, x, y, r)
