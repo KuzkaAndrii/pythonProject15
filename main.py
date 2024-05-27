@@ -1,6 +1,5 @@
-from turel import *
-from plane import *
 from background import *
+from turel import *
 if __name__=="__main__":
     root=Tk()
     canvas=Canvas(root, width=600, height=500)
@@ -8,9 +7,11 @@ if __name__=="__main__":
     #canvas.create_line(20, 20, 100, 20)
     #canvas.create_line(20, 20, 20, 200)
     fonn = Background(canvas)
+    lab=Label(root, text="shooted: 0")
+    lab.pack()
+    gr=GameRule(canvas, 200, lab)
 
-    pl = Plain(canvas, 600, 50, 200)
-    tur = Turel(canvas, 30, 360, 100, 0.0, pl, 10)
+    tur = Turel(canvas, 30, 360, 100, 0.0, 10, gr)
 
 
 
@@ -21,6 +22,5 @@ if __name__=="__main__":
 
     root.bind("<space>", lambda event: tur.piw_paw())
     root.bind("q", lambda event: tur.piw_paw())
-    #pl.go()
     root.mainloop()
     print("main")

@@ -1,18 +1,11 @@
 from turel import *
 from math import sin, cos
-def event_crash(b, p):
-    line1=(b._x-p._x)+3*(b._y-p._y)>=0
-    line2=b._x<=p._x+p._r*0.3
-    line3=(b._x-p._x)-3*(b._y-p._y)>=0
-    if line1 and line2 and line3:
-        if b._y<=p._y-0.1*p._r:
-            return False
-        else:
-            return True
+
 class Ball(PObj):
-    def __init__(self, fon, x, y, r, aim, fi, sp):
+    def __init__(self, fon, x, y, r, fi, sp, gr):
         super().__init__(fon, x, y, r)
-        self._aim=aim
+        self._gr=gr
+        self._gr.check()
         self._sp=sp
         self._c, self._s = self._sp * cos(fi), self._sp * sin(fi)
         self._obj=self._fon.create_oval(self._x-0.025*r, self._y+0.025*r, self._x+0.025*r, self._y-0.025*r, fill="red")
@@ -20,13 +13,13 @@ class Ball(PObj):
         self._fon.move(self._obj, self._c, self._s)
         self._x = self._x + self._c
         self._y = self._y + self._s
-        if self._y <= 0:
+        if self._y <= 0 or self._x>=600:
             self._fon.delete(self._obj)
+            self._gr.check()
             del self
             return
-        elif event_crash(self, self._aim):
-            self._aim._dam = True
-            self._aim.repid()
+        elif self._gr.event_shooted(self):
+            self._gr.check()
             self._fon.delete(self._obj)
             del self
             return

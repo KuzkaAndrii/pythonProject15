@@ -21,11 +21,11 @@ class Head(PObj):
             self.truba.__init__(self.truba._fon, self.truba._x, self.truba._y, self.truba._r, nlx, nly, uvx, uvy, dvx, dvy)
             self.h=h
 class Turel(PObj):
-    def __init__(self, fon, x, y, r, h, pl, bs):
+    def __init__(self, fon, x, y, r, h, bs, gr):
         super().__init__(fon, x, y, r)
+        self._gr=gr
         self._stvol=Head(fon, x, y, r, h)
         self._ground=self._fon.create_arc(self._x, self._y, self._x + self._r, self._y + self._r, start=0, extent=180, fill="gray")
-        self._aim=pl
         self._bs = bs
         self._t = time()
         self._tlim = 0.1
@@ -33,10 +33,11 @@ class Turel(PObj):
         tt=time()
         if float(tt-self._t)>=self._tlim:
             at = atan((self._stvol.truba._ly - self._stvol.truba._y) / (self._stvol.truba._lx - self._stvol.truba._x))
-            ba = Ball(self._fon, self._stvol.truba._lx, self._stvol.truba._ly, self._r, self._aim, at, self._bs)
+            ba = Ball(self._fon, self._stvol.truba._lx, self._stvol.truba._ly, self._r, at, self._bs, self._gr)
             self._t=tt
             return ba.move()
     def muve(self, ar):
+        self._gr.check()
         self._stvol.muve(ar)
 if __name__=="__main__":
     print("turel")
